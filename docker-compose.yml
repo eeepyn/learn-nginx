@@ -2,7 +2,8 @@ services:
   web:
     build:
       context: ./django/
-    command: python manage.py runserver 0.0.0.0:8000
+        #command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn demo.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./django/:/usr/src/app/
     ports:
