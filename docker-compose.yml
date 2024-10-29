@@ -6,23 +6,20 @@ services:
     command: gunicorn demo.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./django/:/usr/src/app/
-    ports:
-      - 8000:8000
-        #expose:
-        #  - 8000
+    expose:
+      - 8000
     env_file:
       - ./.env/dev.env
 
+  nginx:
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
 
 
-        #  nginx:
-        #    build:
-        #      context: ./nginx/
-        #    ports:
-        #      - 80:80
-        #    volumes:
-        #      - ./nginx/html/:/usr/share/nginx/html/
-        #      - ./nginx/conf.d/:/etc/nginx/conf.d/
         #  dns:
         #    build:
         #      context: ./dns/
