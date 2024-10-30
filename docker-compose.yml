@@ -20,19 +20,19 @@ services:
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - static_files:/home/app/staticfiles
+
+
+  dns:
+    build:
+      context: ./dns/
+    restart: always
+    ports:
+      - 53:53
+      - 53:53/udp
+    volumes:
+      - ./dns/named.conf:/etc/bind/named.conf
+      - ./dns/zone/:/etc/bind/zone/
+    command: named -c /etc/bind/named.conf -g -u named
+
 volumes:
   static_files:
-
-
-        #  dns:
-        #    build:
-        #      context: ./dns/
-        #    restart: always
-        #    ports:
-        #      - 53:53
-        #      - 53:53/udp
-        #    volumes:
-        #      - ./dns/named.conf:/etc/bind/named.conf
-        #      - ./dns/zone/:/etc/bind/zone/
-        #    command: named -c /etc/bind/named.conf -g -u named
-
